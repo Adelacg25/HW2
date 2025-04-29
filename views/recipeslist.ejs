@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Recipe List</h1>
+    </header>
+
+    <main>
+        <h2>Recipe List</h2>
+
+        <!-- Chicken Recipes Section -->
+        <section>
+            <h3>Chicken Recipes</h3>
+            <% if (chickenRecipes && chickenRecipes.length > 0) { %>
+                <ul>
+                    <% chickenRecipes.forEach(recipe => { %>
+                        <li>
+                            <a href="/recipes/<%= recipe.id %>"><%= recipe.name %></a> - <%= recipe.description %>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>No Chicken Recipes Found.</p>
+            <% } %>
+        </section>
+
+        <!-- Beef Recipes Section -->
+        <section>
+            <h3>Beef Recipes</h3>
+            <% if (beefRecipes && beefRecipes.length > 0) { %>
+                <ul>
+                    <% beefRecipes.forEach(recipe => { %>
+                        <li>
+                            <a href="/recipes/<%= recipe.id %>"><%= recipe.name %></a> - <%= recipe.description %>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>No Beef Recipes Found.</p>
+            <% } %>
+        </section>
+
+        <!-- Tofu Recipes Section -->
+        <section>
+            <h3>Tofu Recipes</h3>
+            <% if (tofuRecipes && tofuRecipes.length > 0) { %>
+                <ul>
+                    <% tofuRecipes.forEach(recipe => { %>
+                        <li>
+                            <a href="/recipes/<%= recipe.id %>"><%= recipe.name %></a> - <%= recipe.description %>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>No Tofu Recipes Found.</p>
+            <% } %>
+        </section>
+
+    </main>
+
+
+</body>
+</html>

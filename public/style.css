@@ -1,0 +1,70 @@
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
+
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic Styling */
+body {
+    font-family: 'Lora', serif; /* Lora font for the entire page */
+    background-color: #f2e4fd;
+    color: #333;
+    line-height: 1.6;
+    text-align: center;
+    
+    /* Flexbox to center content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 85vh; /* Make sure the content takes at least the full height of the screen */
+}
+
+/* Header Styles */
+h1 {
+    font-size: 3rem;
+    color: #d773a5;
+    margin: 50px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Styling for Links */
+.button-container {
+    margin-top: 30px;
+}
+
+.button {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #ce88ab;
+    padding: 15px 30px;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+    margin: 20px;  /* Add spacing between buttons */
+}
+
+.button:hover {
+    background-color: #ff1493;
+    transform: scale(1.1);
+}
+
+.button:active {
+    background-color: #d9006c;
+}
+
+.corner-image {
+    position: fixed; 
+    bottom: 20px;    /* 20px from the bottom */
+    left: 20px;      /* 20px from the left */
+    width: 600px; /* Make wider */
+    height: auto; /* Keep the correct proportions */
+    z-index: 10; /* Make sure it stays above background */
+}

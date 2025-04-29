@@ -1,0 +1,24 @@
+<h2>Add Recipe</h2>
+<form action="/recipes/add" method="POST">
+    <label for="name">Recipe Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="description">Description</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <label for="protein_type">Protein Type</label>
+    <select id="protein_type" name="protein_type">
+        <option value="Chicken">Chicken</option>
+        <option value="Beef">Beef</option>
+        <option value="Tofu">Tofu</option>
+    </select>
+
+    <label for="ingredients">Ingredients</label>
+    <select id="ingredients" name="ingredients" multiple>
+        <% ingredients.forEach(ingredient => { %>
+            <option value="<%= ingredient.id %>"><%= ingredient.name %></option>
+        <% }) %>
+    </select>
+
+    <button type="submit">Add Recipe</button>
+</form>
