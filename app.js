@@ -43,6 +43,16 @@ app.get('/recipeslist', async (req, res) => {
     }
 });
 
+// Add recipe form page
+app.get('/recipes/add', async (req, res) => {
+    try {
+        const [ingredients] = await db.query("SELECT * FROM ingredients");
+        res.render('addRecipe', { ingredients });
+    } catch (err) {
+        console.error("Error fetching ingredients:", err);
+        res.status(500).send("Error loading Add Recipe page.");
+    }
+});
 
 app.get('/recipes/:id', async (req, res) => {
     const recipeId = req.params.id;
@@ -67,23 +77,15 @@ app.get('/recipes/:id', async (req, res) => {
 
 
 
-// Add recipe form page
-app.get('/recipes/add', async (req, res) => {
-    try {
-        const [ingredients] = await db.query("SELECT * FROM ingredients");
-        res.render('addRecipe', { ingredients });
-    } catch (err) {
-        console.error("Error fetching ingredients:", err);
-        res.status(500).send("Error loading Add Recipe page.");
-    }
-});
+
 
 app.post('/recipes/add', async (req, res) => {
     try {
         const { name, description, protein_type } = req.body;
         let ingredientIds = req.body.ingredients;
 
-        
+        console.log("Form submission:", req.body);
+
         if (!Array.isArray(ingredientIds)) {
             ingredientIds = ingredientIds ? [ingredientIds] : [];
         }
@@ -94,7 +96,7 @@ app.post('/recipes/add', async (req, res) => {
         );
 
         const recipeId = result.insertId;
-        console.log("Inserted Recipe ID:", recipeId);
+        console.log("Inserted new recipe ID:", recipeId);
 
         for (const id of ingredientIds) {
             await db.query(
@@ -103,6 +105,7 @@ app.post('/recipes/add', async (req, res) => {
             );
         }
 
+        console.log("Recipe and ingredients added successfully");
         res.redirect('/recipeslist');
     } catch (err) {
         console.error("Error inserting recipe:", err);
