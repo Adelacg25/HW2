@@ -23,7 +23,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 85vh; /* Make sure the content takes at least the full height of the screen */
+    min-height: 85vh; 
 }
 
 /* Header Styles */

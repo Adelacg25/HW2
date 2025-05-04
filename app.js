@@ -18,7 +18,7 @@ const db = mysql.createPool({
     host: 'localhost',
     user: 'root',        
     password: 'mintfeelings25',       
-    database: 'hw2'      
+    database: 'recipe_site'      
 });
 
 // ROUTES:
@@ -56,7 +56,7 @@ app.get('/recipes/:id', async (req, res) => {
     const recipe = recipeRows[0];
 
     const [ingredientRows] = await db.query(`
-        SELECT ingredients.name, ingredients.fact
+        SELECT ingredients.name, ingredients.info
         FROM ingredients
         JOIN recipe_ingredients ON ingredients.id = recipe_ingredients.ingredient_id
         WHERE recipe_ingredients.recipe_id = ?
@@ -69,33 +69,45 @@ app.get('/recipes/:id', async (req, res) => {
 
 // Add recipe form page
 app.get('/recipes/add', async (req, res) => {
-    const [ingredients] = await db.query("SELECT * FROM ingredients");
-    res.render('addRecipe', { ingredients });
+    try {
+        const [ingredients] = await db.query("SELECT * FROM ingredients");
+        res.render('addRecipe', { ingredients });
+    } catch (err) {
+        console.error("Error fetching ingredients:", err);
+        res.status(500).send("Error loading Add Recipe page.");
+    }
 });
 
 app.post('/recipes/add', async (req, res) => {
-    const { name, description, protein_type } = req.body;
-    
-   
-    const ingredientIds = Array.isArray(req.body.ingredients) ? req.body.ingredients : [req.body.ingredients];
+    try {
+        const { name, description, protein_type } = req.body;
+        let ingredientIds = req.body.ingredients;
 
-    // Insert the new recipe into the recipes table
-    const [result] = await db.query(
-        "INSERT INTO recipes (name, description, protein_type) VALUES (?, ?, ?)",
-        [name, description, protein_type]
-    );
-    const recipeId = result.insertId;
+        
+        if (!Array.isArray(ingredientIds)) {
+            ingredientIds = ingredientIds ? [ingredientIds] : [];
+        }
 
-    // Insert ingredients into the recipe_ingredients table
-    for (const ingredientId of ingredientIds) {
-        await db.query(
-            "INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)",
-            [recipeId, ingredientId]
+        const [result] = await db.query(
+            "INSERT INTO recipes (name, description, protein_type) VALUES (?, ?, ?)",
+            [name, description, protein_type]
         );
-    }
 
-    // Redirect to the recipe list after adding the new recipe
-    res.redirect('/recipeslist');
+        const recipeId = result.insertId;
+        console.log("Inserted Recipe ID:", recipeId);
+
+        for (const id of ingredientIds) {
+            await db.query(
+                "INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)",
+                [recipeId, id]
+            );
+        }
+
+        res.redirect('/recipeslist');
+    } catch (err) {
+        console.error("Error inserting recipe:", err);
+        res.status(500).send("Recipe not added.");
+    }
 });
 
 

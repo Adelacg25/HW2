@@ -1,24 +1,39 @@
-<h2>Add Recipe</h2>
-<form action="/recipes/add" method="POST">
-    <label for="name">Recipe Name</label>
-    <input type="text" id="name" name="name" required>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Recipe</title>
+</head>
+<body>
+    <h1>Add a New Recipe</h1>
 
-    <label for="description">Description</label>
-    <textarea id="description" name="description" required></textarea>
+    <form action="/recipes/add" method="POST">
+        <label for="name">Recipe Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
 
-    <label for="protein_type">Protein Type</label>
-    <select id="protein_type" name="protein_type">
-        <option value="Chicken">Chicken</option>
-        <option value="Beef">Beef</option>
-        <option value="Tofu">Tofu</option>
-    </select>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br><br>
 
-    <label for="ingredients">Ingredients</label>
-    <select id="ingredients" name="ingredients" multiple>
+        <label for="protein_type">Protein Type:</label><br>
+        <select id="protein_type" name="protein_type" required>
+            <option value="">--Select--</option>
+            <option value="Chicken">Chicken</option>
+            <option value="Beef">Beef</option>
+            <option value="Tofu">Tofu</option>
+            <option value="Grains">Grains</option>
+        </select><br><br>
+
+        <label>Ingredients:</label><br>
         <% ingredients.forEach(ingredient => { %>
-            <option value="<%= ingredient.id %>"><%= ingredient.name %></option>
-        <% }) %>
-    </select>
+            <input type="checkbox" name="ingredients" value="<%= ingredient.id %>">
+            <%= ingredient.name %><br>
+        <% }); %>
 
-    <button type="submit">Add Recipe</button>
-</form>
+        <br>
+        <button type="submit">Add Recipe</button>
+    </form>
+
+    <br>
+    <a href="/recipeslist">← Back to Recipe List</a>
+</body>
+</html>
