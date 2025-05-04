@@ -1,0 +1,12 @@
+
+
+git clone https://github.com/Adelacg25/HW2
+
+use - npm install
+
+To run this project locally, first ensure you have Node.js and 
+MySQL installed. Clone the repository, install the dependencies with npm install, 
+and set up a MySQL database named recipe_site with the appropriate tables and seed data. 
+Update the database credentials in app.js to match your local MySQL setup. Finally, start the server using 
+node app.js and visit http://localhost:3000 in your browser.
+
